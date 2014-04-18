@@ -23,13 +23,15 @@ EOF
 }
 
 precheck() {
-	javasrc=$1".java"
-	find . -name $javasrc | grep $javasrc
-        if [ "$?" -eq 1 ];
-        then
-		echo Not found $1.
-		exit 1
-        fi
+	for classname in `echo $1 | tr -s "," " "`; do
+		javasrc=$classname".java"
+		find . -name $javasrc | grep $javasrc
+		if [ "$?" -eq 1 ];
+		then
+			echo Not found $classname
+			exit 1
+		fi
+	done
 }
 
 if [ $# -ne 1 ];
